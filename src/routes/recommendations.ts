@@ -15,7 +15,9 @@ import type { RecommendationsResponse } from "@/types/api.js";
 
 const RecommendationsBodySchema = z.object({
   s3_key: z.string().min(1),
-  timbre_label: z.string().min(1),
+  gender: z.string().optional(),
+  vocal_range: z.string().optional(),
+  genre: z.string().optional(),
   top_k: z.number().int().min(1).max(50).default(10),
 });
 

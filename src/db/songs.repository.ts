@@ -18,12 +18,19 @@ export interface SongSimilarityRow {
   title: string;
   artist: string;
   timbre_label: string;
+  url?: string | null;
+  genre?: string | null;
+  gender?: string | null;
+  vocal_range?: string | null;
   similarity: number;
 }
 
 export interface FindSimilarParams {
   timbreLabel: string;
   embedding: number[];
+  gender?: string;
+  vocalRange?: string;
+  genre?: string;
   topK: number;
 }
 
@@ -36,36 +43,69 @@ export async function findSimilarSongs(
     );
   }
 
-  const sql = `
+  let sql = `
     SELECT
       id,
       title,
       artist,
       timbre_label,
+      url,
+      genre,
+      gender,
+      vocal_range,
       1 - (embedding_vector <=> $2::vector) AS similarity
     FROM songs
     WHERE timbre_label = $1
-    ORDER BY embedding_vector <=> $2::vector
-    LIMIT $3;
   `;
+  const queryParams: any[] = [
+    params.timbreLabel,
+    pgvector.toSql(params.embedding),
+  ];
+
+  let paramIndex = 3;
+  if (params.gender) {
+    sql += ` AND gender = $${paramIndex}`;
+    queryParams.push(params.gender);
+    paramIndex++;
+  }
+  if (params.vocalRange) {
+    sql += ` AND vocal_range = $${paramIndex}`;
+    queryParams.push(params.vocalRange);
+    paramIndex++;
+  }
+  if (params.genre) {
+    sql += ` AND genre = $${paramIndex}`;
+    queryParams.push(params.genre);
+    paramIndex++;
+  }
+
+  sql += `
+    ORDER BY embedding_vector <=> $2::vector
+    LIMIT $${paramIndex}
+  `;
+  queryParams.push(params.topK);
 
   const { rows } = await pool.query<{
     id: string;
     title: string;
     artist: string;
     timbre_label: string;
+    url: string | null;
+    genre: string | null;
+    gender: string | null;
+    vocal_range: string | null;
     similarity: string | number;
-  }>(sql, [
-    params.timbreLabel,
-    pgvector.toSql(params.embedding),
-    params.topK,
-  ]);
+  }>(sql, queryParams);
 
   return rows.map((r) => ({
     id: r.id,
     title: r.title,
     artist: r.artist,
     timbre_label: r.timbre_label,
+    url: r.url,
+    genre: r.genre,
+    gender: r.gender,
+    vocal_range: r.vocal_range,
     similarity:
       typeof r.similarity === "string" ? Number(r.similarity) : r.similarity,
   }));
