@@ -133,6 +133,12 @@ npm start
 
 ---
 
+## ⚠ 주의사항 및 다음 단계
+
+현재 데이터베이스 마이그레이션 (`npm run db:migrate`) 완료 시 스키마는 구축되나 **추천 대상 곡 데이터가 부재**합니다. 실환경 시연을 위해서는 노래 DB를 생성 및 적재하는 파이프라인 구축(ETL) 작업이 반드시 선행되어야 합니다. 관련 안내는 `docs/BACKEND_TODO.md` 및 `../ai-server/README.md`를 참고하세요.
+
+---
+
 ## 문서 인덱스
 
 - [`docs/BACKEND_STRUCTURE.md`](./docs/BACKEND_STRUCTURE.md) — 백엔드 폴더 구조 / 레이어 책임

@@ -25,7 +25,7 @@
 ### 업로드
 - [x] `POST /uploads/presigned-url` 라우트 + zod 스키마
 - [x] S3 PUT presigned URL 발급 (`services/s3.ts`)
-- [ ] 허용 content_type / 키 컨벤션 프론트와 최종 합의 (`audio/webm` 외)
+- [x] 허용 content_type / 키 컨벤션 프론트와 최종 합의 (`audio/webm`, `audio/mp4` 등 iOS 대응 완료)
 - [ ] 업로드 크기 상한 정책 합의 및 적용 (S3 policy / content-length-range)
 
 ### 추론
@@ -38,8 +38,8 @@
 - [x] `POST /recommendations/by-timbre` 라우트 + zod 스키마
 - [x] `services/recommendation.ts` - inference → pgvector 검색 조립
 - [x] `db/songs.repository.ts` - pgvector cosine 유사도 쿼리
-- [ ] `timbre_label` enum 프론트와 합의 후 zod enum 으로 좁히기
-- [ ] `top_k` 기본/최대값 합의 (현재 default 10, max 50)
+- [x] `timbre_label` 자동 분석 반영 및 3개 라벨(`["Normal", "Husky", "Clear"]`) 연동
+- [x] `top_k` 기본/최대값 합의 (default 10, max 50 반영)
 - [ ] 정렬/필터링 외 다양성(diversity) 정책 (선택)
 
 ---
@@ -68,11 +68,11 @@
 
 | 항목 | 내용 | 상태 |
 |------|------|------|
-| `timbre_label` enum 값 | warm / bright / airy 등 목록 확정 | 미합의 |
-| 오디오 포맷 | 현재 webm/ogg/mp3/wav 허용. 표준 확정 필요 | 미합의 |
+| `timbre_label` enum 값 | `["Normal", "Husky", "Clear"]` 세 라벨 자동 분류 적용 | 합의 완료 |
+| 오디오 포맷 | `audio/webm`, `audio/mp4` 등 S3 직접 업로드 허용 | 합의 완료 |
 | presigned URL 만료 시간 | 기본 900s. 운영 권장값 확인 | 확인 필요 |
-| 에러 코드 목록 | `EMBEDDING_TIMEOUT`, `EMBEDDING_SHAPE_MISMATCH`, `VALIDATION_ERROR` 등 | 1차 정의 |
-| `top_k` 기본/최대 | default 10, max 50 | 확인 필요 |
+| 에러 코드 목록 | `EMBEDDING_TIMEOUT`, `VALIDATION_ERROR`, `AUDIO_DOWNLOAD_FAILED` 등 | 1차 정의 |
+| `top_k` 기본/최대 | default 10, max 50 | 합의 완료 |
 
 ---
 
@@ -88,4 +88,5 @@
 
 ## Update Log
 
+- 2026-05-25: E2E 파이프라인 정렬 완료 (음색 자동 분류 및 2차 필터(성별, 장르, 음역대) 반영, iOS/Safari `audio/mp4` 지원 완료, `vitest` 테스트 작성)
 - 2026-05-17: Phase 1 skeleton 완료 (Fastify + TS + pg/pgvector + S3 + inference 클라이언트, 라우트/서비스/리포지토리 레이어, 마이그레이션 러너, 문서 초안)

@@ -30,8 +30,10 @@ export interface PresignedUrlResponse {
 
 export interface RecommendationsRequest {
   s3_key: string;
-  timbre_label: string;
-  top_k: number;
+  gender?: string;
+  vocal_range?: string;
+  genre?: string;
+  top_k?: number;
 }
 
 export interface RecommendationItem {
@@ -39,19 +41,26 @@ export interface RecommendationItem {
   title: string;
   artist: string;
   timbre_label: string;
+  url?: string | null;
+  genre?: string | null;
+  gender?: string | null;
+  vocal_range?: string | null;
   similarity: number;
 }
 
 export interface RecommendationsResponse {
   query: {
-    timbre_label: string;
+    predicted_timbre_label: string;
+    gender?: string;
+    vocal_range?: string;
+    genre?: string;
     top_k: number;
   };
   items: RecommendationItem[];
 }
 
 // =====================================================
-// inference-api: POST /embed (core-api 가 호출)
+// inference-api: POST /embed 및 POST /classify (core-api 가 호출)
 // =====================================================
 
 export interface EmbedRequestByS3Key {
@@ -68,6 +77,16 @@ export type EmbedRequest = EmbedRequestByS3Key | EmbedRequestByPresignedUrl;
 export interface EmbedResponse {
   /** 항상 길이 512인 float 배열 */
   embedding: number[];
+}
+
+export interface ClassificationItem {
+  label: string;
+  score: number;
+}
+
+export interface ClassifyResponse {
+  predicted_label: string;
+  scores: ClassificationItem[];
 }
 
 /** inference 출력 벡터 차원. DB 스키마 VECTOR(512) 와 항상 일치. */

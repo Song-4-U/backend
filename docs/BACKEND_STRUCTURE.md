@@ -87,4 +87,5 @@ import { recommendByTimbre } from "@/services/recommendation.js";
 
 ## Update Log
 
+- 2026-05-25: 0002 마이그레이션 적용에 따른 메타데이터 필터 및 리포지토리 쿼리 정보 구조 보완
 - 2026-05-17: 초기 폴더 구조 가이드 작성 (Phase 1 skeleton)

@@ -24,6 +24,8 @@ export const ALLOWED_AUDIO_CONTENT_TYPES = new Set<string>([
   "audio/mpeg",
   "audio/wav",
   "audio/x-wav",
+  "audio/mp4",
+  "audio/aac",
 ]);
 
 function extFromContentType(contentType: string): string {
@@ -31,6 +33,8 @@ function extFromContentType(contentType: string): string {
   if (contentType.includes("ogg")) return "ogg";
   if (contentType.includes("mpeg")) return "mp3";
   if (contentType.includes("wav")) return "wav";
+  if (contentType.includes("mp4")) return "m4a";
+  if (contentType.includes("aac")) return "aac";
   return "bin";
 }
 

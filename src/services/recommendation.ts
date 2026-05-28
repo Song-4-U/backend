@@ -8,7 +8,7 @@
  */
 
 import { findSimilarSongs } from "@/db/songs.repository.js";
-import { embedAudio } from "@/services/inference.js";
+import { embedAudio, classifyAudio } from "@/services/inference.js";
 import { env } from "@/config/env.js";
 import { createDownloadPresignedUrl } from "@/services/s3.js";
 import type {
@@ -36,21 +36,34 @@ export async function recommendByTimbre(
         key: req.s3_key,
       };
 
-  const embedding = await embedAudio(embedRequest, {
-    signal: opts.signal,
-    requestId: opts.requestId,
-  });
+  const [embedding, classification] = await Promise.all([
+    embedAudio(embedRequest, {
+      signal: opts.signal,
+      requestId: opts.requestId,
+    }),
+    classifyAudio(embedRequest, {
+      signal: opts.signal,
+      requestId: opts.requestId,
+    }),
+  ]);
 
+  const topK = req.top_k ?? 10;
   const rows = await findSimilarSongs({
-    timbreLabel: req.timbre_label,
+    timbreLabel: classification.predicted_label,
     embedding,
-    topK: req.top_k,
+    gender: req.gender,
+    vocalRange: req.vocal_range,
+    genre: req.genre,
+    topK,
   });
 
   return {
     query: {
-      timbre_label: req.timbre_label,
-      top_k: req.top_k,
+      predicted_timbre_label: classification.predicted_label,
+      gender: req.gender,
+      vocal_range: req.vocal_range,
+      genre: req.genre,
+      top_k: topK,
     },
     items: rows,
   };
