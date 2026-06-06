@@ -7,12 +7,15 @@
 
 import cors from "@fastify/cors";
 import sensible from "@fastify/sensible";
-import fastify, { type FastifyInstance } from "fastify";
+import fastify, {
+  type FastifyError,
+  type FastifyInstance,
+} from "fastify";
 
 import { corsOrigins, env } from "@/config/env.js";
 import { ApiError, toApiErrorBody } from "@/lib/errors.js";
 import { registerHealthRoutes } from "@/routes/health.js";
-import { registerRecommendationRoutes } from "@/routes/recommendations.js";
+import { registerMatchRoutes } from "@/routes/matches.js";
 import { registerUploadRoutes } from "@/routes/uploads.js";
 
 export interface BuildAppOptions {
@@ -48,7 +51,7 @@ export async function buildApp(opts: BuildAppOptions = {}): Promise<FastifyInsta
 
   await registerHealthRoutes(app);
   await registerUploadRoutes(app);
-  await registerRecommendationRoutes(app);
+  await registerMatchRoutes(app);
 
   app.setNotFoundHandler((_req, reply) =>
     reply.code(404).send({
@@ -56,7 +59,7 @@ export async function buildApp(opts: BuildAppOptions = {}): Promise<FastifyInsta
     }),
   );
 
-  app.setErrorHandler((err, req, reply) => {
+  app.setErrorHandler((err: FastifyError, req, reply) => {
     if (err instanceof ApiError) {
       req.log.warn(
         { err, code: err.code, statusCode: err.statusCode },

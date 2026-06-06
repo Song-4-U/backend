@@ -2,7 +2,7 @@
   "name": "song4u-core-api",
   "version": "0.1.0",
   "private": true,
-  "description": "core-api for Song-4-U (timbre-based song recommendation)",
+  "description": "core-api for Song-4-U (timbre-based voice twin / duet matching)",
   "type": "module",
   "engines": {
     "node": ">=20"

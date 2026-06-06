@@ -14,14 +14,14 @@ backend/
 │   ├── routes/               HTTP 엔드포인트 (zod 검증 + service 호출)
 │   │   ├── health.ts
 │   │   ├── uploads.ts
-│   │   └── recommendations.ts
+│   │   └── matches.ts
 │   ├── services/             비즈니스 유스케이스
 │   │   ├── s3.ts             presigned URL 발급
 │   │   ├── inference.ts      inference-api 호출 클라이언트
-│   │   └── recommendation.ts E2E 추천 흐름
+│   │   └── voiceMatch.ts     E2E 음색 매칭 흐름
 │   ├── db/
 │   │   ├── pool.ts           pg Pool + pgvector 타입 등록
-│   │   └── songs.repository.ts
+│   │   └── voiceProfiles.repository.ts
 │   ├── lib/
 │   │   ├── errors.ts         ApiError 계열 + 응답 shape
 │   │   └── logger.ts         Pino 인스턴스
@@ -63,7 +63,7 @@ flowchart TD
 ```ts
 import { env } from "@/config/env.js";
 import { ApiError } from "@/lib/errors.js";
-import { recommendByTimbre } from "@/services/recommendation.js";
+import { matchByVoice } from "@/services/voiceMatch.js";
 ```
 
 > ESM + bundler resolution 기준이므로 import 경로에 `.js` 확장자를 붙입니다.
@@ -73,10 +73,10 @@ import { recommendByTimbre } from "@/services/recommendation.js";
 
 | 종류 | 규칙 | 예시 |
 |------|------|------|
-| 모듈 | kebab-case | `songs.repository.ts` |
-| 라우트 | kebab-case + 도메인명 | `recommendations.ts` |
+| 모듈 | kebab-case | `voiceProfiles.repository.ts` |
+| 라우트 | kebab-case + 도메인명 | `matches.ts` |
 | 클래스/타입 | PascalCase | `ApiError`, `PresignedUrlResponse` |
-| 함수/변수 | camelCase | `embedAudio`, `findSimilarSongs` |
+| 함수/변수 | camelCase | `embedAudio`, `findSimilarProfiles` |
 | SQL 마이그레이션 | `NNNN_<name>.sql` | `0001_init.sql` |
 
 ## 외부 노출 응답 규칙

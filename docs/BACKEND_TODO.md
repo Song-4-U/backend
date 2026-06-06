@@ -34,12 +34,14 @@
 - [ ] inference-api 가 S3 직접 접근 불가한 환경에서 download presigned URL 폴백 검증
 - [ ] 재시도 정책 (네트워크/5xx) - exponential backoff 1~2회
 
-### 추천
-- [x] `POST /recommendations/by-timbre` 라우트 + zod 스키마
-- [x] `services/recommendation.ts` - inference → pgvector 검색 조립
-- [x] `db/songs.repository.ts` - pgvector cosine 유사도 쿼리
+### 매칭 (음색 트윈/듀엣)
+- [x] `POST /matches/by-voice` 라우트 + zod 스키마
+- [x] `services/voiceMatch.ts` - inference → (선택)프로필 등록 → pgvector 검색 조립
+- [x] `db/voiceProfiles.repository.ts` - 프로필 INSERT + pgvector cosine 유사도 쿼리(본인 제외)
 - [x] `timbre_label` 자동 분석 반영 및 3개 라벨(`["Normal", "Husky", "Clear"]`) 연동
 - [x] `top_k` 기본/최대값 합의 (default 10, max 50 반영)
+- [x] `save_profile`/`display_name` 동의 기반 프로필 등록 흐름
+- [ ] 동의/프라이버시 정책 (프로필 삭제 API, 보관 기간) 정의
 - [ ] 정렬/필터링 외 다양성(diversity) 정책 (선택)
 
 ---
@@ -88,5 +90,6 @@
 
 ## Update Log
 
+- 2026-06-06: 프로젝트 방향 전환(노래 추천 → 음색 트윈/듀엣 매칭). `POST /recommendations/by-timbre` → `POST /matches/by-voice`, `songs` 테이블/리포지토리 → `voice_profiles`(0003 마이그레이션), `save_profile` 동의 기반 프로필 등록 + 본인 제외 매칭, `genre` 필터 제거, 테스트(`voiceMatch.test.ts`) 갱신
 - 2026-05-25: E2E 파이프라인 정렬 완료 (음색 자동 분류 및 2차 필터(성별, 장르, 음역대) 반영, iOS/Safari `audio/mp4` 지원 완료, `vitest` 테스트 작성)
 - 2026-05-17: Phase 1 skeleton 완료 (Fastify + TS + pg/pgvector + S3 + inference 클라이언트, 라우트/서비스/리포지토리 레이어, 마이그레이션 러너, 문서 초안)

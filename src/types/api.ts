@@ -25,38 +25,40 @@ export interface PresignedUrlResponse {
 }
 
 // =====================================================
-// core-api: POST /recommendations/by-timbre
+// core-api: POST /matches/by-voice
 // =====================================================
 
-export interface RecommendationsRequest {
+export interface VoiceMatchRequest {
   s3_key: string;
+  /** save_profile=true 일 때 필수. 매칭 풀에 등록될 표시 이름 */
+  display_name?: string;
+  /** 이번 녹음을 매칭 가능한 프로필로 저장할지 동의 여부 (기본 false) */
+  save_profile?: boolean;
   gender?: string;
   vocal_range?: string;
-  genre?: string;
   top_k?: number;
 }
 
-export interface RecommendationItem {
+export interface VoiceMatch {
   id: string;
-  title: string;
-  artist: string;
+  display_name: string;
   timbre_label: string;
-  url?: string | null;
-  genre?: string | null;
   gender?: string | null;
   vocal_range?: string | null;
+  audio_url?: string | null;
   similarity: number;
 }
 
-export interface RecommendationsResponse {
+export interface VoiceMatchResponse {
   query: {
     predicted_timbre_label: string;
     gender?: string;
     vocal_range?: string;
-    genre?: string;
     top_k: number;
   };
-  items: RecommendationItem[];
+  /** save_profile=true 로 새로 등록된 프로필 id. 저장하지 않았으면 null */
+  saved_profile_id: string | null;
+  matches: VoiceMatch[];
 }
 
 // =====================================================

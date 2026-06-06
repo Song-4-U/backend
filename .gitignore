@@ -20,3 +20,6 @@ npm-debug.log*
 
 # test/coverage
 /coverage
+
+# cursor
+.cursor

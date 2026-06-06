@@ -1,7 +1,7 @@
 # Song-4-U core-api
 
-> "음색 기반 노래 추천 서비스"의 메인 백엔드(`core-api`)입니다.
-> S3 presigned URL 발급, inference-api 호출, pgvector 기반 유사도 검색을 담당합니다.
+> "음색 기반 음색 트윈/듀엣 매칭 서비스"의 메인 백엔드(`core-api`)입니다.
+> S3 presigned URL 발급, inference-api 호출, pgvector 기반 음색 프로필 유사도 매칭을 담당합니다.
 
 전체 서비스 설계 문서는 [`../frontend/docs/`](../frontend/docs) 를 참고하세요.
 
@@ -31,7 +31,7 @@ backend/
 │   ├── app.ts                Fastify 인스턴스 빌더 + 공통 에러 핸들러
 │   ├── config/env.ts         dotenv + zod 환경변수 검증
 │   ├── routes/               HTTP 라우트 (얇은 어댑터)
-│   ├── services/             도메인 유스케이스 (s3, inference, recommendation)
+│   ├── services/             도메인 유스케이스 (s3, inference, voiceMatch)
 │   ├── db/                   pg 풀 + 리포지토리 (SQL 캡슐화)
 │   ├── lib/                  errors, logger 등 공용 유틸
 │   └── types/api.ts          요청/응답 타입 (프론트와 동일 snake_case)
@@ -115,7 +115,7 @@ npm start
 | `GET` | `/health` | liveness |
 | `GET` | `/ready` | readiness (DB ping 포함) |
 | `POST` | `/uploads/presigned-url` | S3 업로드용 presigned URL 발급 |
-| `POST` | `/recommendations/by-timbre` | 업로드 오디오 기준 유사 곡 추천 |
+| `POST` | `/matches/by-voice` | 업로드 오디오 기준 음색 트윈/듀엣 파트너 매칭 |
 
 표준 에러 응답 shape:
 
@@ -135,7 +135,7 @@ npm start
 
 ## ⚠ 주의사항 및 다음 단계
 
-현재 데이터베이스 마이그레이션 (`npm run db:migrate`) 완료 시 스키마는 구축되나 **추천 대상 곡 데이터가 부재**합니다. 실환경 시연을 위해서는 노래 DB를 생성 및 적재하는 파이프라인 구축(ETL) 작업이 반드시 선행되어야 합니다. 관련 안내는 `docs/BACKEND_TODO.md` 및 `../ai-server/README.md`를 참고하세요.
+매칭 풀(`voice_profiles`)은 **별도 적재(ETL)가 필요 없습니다.** 사용자가 `save_profile=true` 로 동의하며 매칭을 요청할 때마다 프로필이 쌓이는 구조입니다. 초기에는 매칭 후보가 적을 수 있으므로, 시연용 시드 프로필을 몇 개 넣어두는 것을 권장합니다(동의/프라이버시 정책은 `docs/BACKEND_TODO.md` 참고).
 
 ---
 
