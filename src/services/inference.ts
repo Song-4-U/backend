@@ -6,7 +6,7 @@
  * - 타임아웃 처리 -> InferenceTimeoutError
  * - embedding 길이 검증 -> InferenceShapeMismatchError
  *
- * 참고: frontend/docs/API_CONTRACTS.md - inference-api
+ * 참고: docs/API_CONTRACTS.md - inference-api
  */
 
 import { env } from "@/config/env.js";

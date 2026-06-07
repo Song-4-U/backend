@@ -1,6 +1,6 @@
 -- =====================================================
 -- 0001_init.sql
--- 단일 진실의 원천: frontend/docs/DB_SCHEMA.md
+-- 단일 진실의 원천: docs/DB_SCHEMA.md
 -- =====================================================
 
 CREATE EXTENSION IF NOT EXISTS vector;

@@ -1,7 +1,7 @@
 /**
  * 도메인 에러 클래스 및 표준 에러 응답 shape.
  *
- * 응답 shape (frontend/docs/API_CONTRACTS.md 참고):
+ * 응답 shape (docs/API_CONTRACTS.md 참고):
  * {
  *   "error": {
  *     "code": "EMBEDDING_TIMEOUT",

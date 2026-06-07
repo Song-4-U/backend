@@ -1,7 +1,7 @@
 /**
  * 음색 트윈/듀엣 매칭 유스케이스.
  *
- * 흐름 (frontend/docs/PIPELINE.md 4~7 단계):
+ * 흐름 (docs/PIPELINE.md 4~7 단계):
  * 1. s3_key 로 inference-api 호출 → 512D embedding + 음색 분류 라벨
  * 2. (save_profile=true) 이번 녹음을 voice_profiles 에 등록
  * 3. timbre_label 로 후보 필터링 + pgvector ANN 검색 (본인 제외)
