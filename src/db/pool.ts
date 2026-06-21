@@ -5,7 +5,7 @@
  * - `pgvector`의 `registerType` 으로 VECTOR 타입을 number[] 로 받도록 등록
  * - 그래cefully shutdown 시 `closePool()` 호출
  *
- * 참고: frontend/docs/DB_SCHEMA.md
+ * 참고: docs/DB_SCHEMA.md
  */
 
 import pg from "pg";

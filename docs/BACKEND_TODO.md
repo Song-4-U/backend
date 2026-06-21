@@ -81,10 +81,10 @@
 ## 참고 문서
 
 - [BACKEND_STRUCTURE.md](./BACKEND_STRUCTURE.md) — 폴더 구조 / 레이어 책임
-- [../../frontend/docs/API_CONTRACTS.md](../../frontend/docs/API_CONTRACTS.md) — API 계약
-- [../../frontend/docs/DB_SCHEMA.md](../../frontend/docs/DB_SCHEMA.md) — DB 스키마
-- [../../frontend/docs/PIPELINE.md](../../frontend/docs/PIPELINE.md) — E2E 파이프라인
-- [../../frontend/docs/ENVIRONMENT.md](../../frontend/docs/ENVIRONMENT.md) — 환경변수
+- [API_CONTRACTS.md](./API_CONTRACTS.md) — API 계약
+- [DB_SCHEMA.md](./DB_SCHEMA.md) — DB 스키마
+- [PIPELINE.md](./PIPELINE.md) — E2E 파이프라인
+- [ENVIRONMENT.md](./ENVIRONMENT.md) — 환경변수
 
 ---
 

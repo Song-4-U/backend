@@ -3,7 +3,7 @@
 > "음색 기반 음색 트윈/듀엣 매칭 서비스"의 메인 백엔드(`core-api`)입니다.
 > S3 presigned URL 발급, inference-api 호출, pgvector 기반 음색 프로필 유사도 매칭을 담당합니다.
 
-전체 서비스 설계 문서는 [`../frontend/docs/`](../frontend/docs) 를 참고하세요.
+전체 서비스 설계 문서는 [`docs/`](./docs) 를 참고하세요.
 
 ---
 
@@ -66,7 +66,7 @@ cp .env.example .env
 | `INFERENCE_API_URL` | `inference-api` 베이스 URL |
 | `CORS_ALLOWED_ORIGINS` | 콤마(,) 구분 origin 목록 |
 
-전체 변수는 [`.env.example`](./.env.example) 과 [`../frontend/docs/ENVIRONMENT.md`](../frontend/docs/ENVIRONMENT.md) 참고.
+전체 변수는 [`.env.example`](./.env.example) 과 [`docs/ENVIRONMENT.md`](./docs/ENVIRONMENT.md) 참고.
 
 ### 3. PostgreSQL 준비
 
@@ -108,7 +108,7 @@ npm start
 
 ## API 요약
 
-`core-api` 가 제공하는 엔드포인트 (자세한 계약은 [`../frontend/docs/API_CONTRACTS.md`](../frontend/docs/API_CONTRACTS.md)).
+`core-api` 가 제공하는 엔드포인트 (자세한 계약은 [`docs/API_CONTRACTS.md`](./docs/API_CONTRACTS.md)).
 
 | 메서드 | 경로 | 설명 |
 |--------|------|------|
@@ -143,7 +143,7 @@ npm start
 
 - [`docs/BACKEND_STRUCTURE.md`](./docs/BACKEND_STRUCTURE.md) — 백엔드 폴더 구조 / 레이어 책임
 - [`docs/BACKEND_TODO.md`](./docs/BACKEND_TODO.md) — Phase별 To-Do
-- [`../frontend/docs/API_CONTRACTS.md`](../frontend/docs/API_CONTRACTS.md) — API 요청/응답 스펙
-- [`../frontend/docs/DB_SCHEMA.md`](../frontend/docs/DB_SCHEMA.md) — PostgreSQL + pgvector 스키마
-- [`../frontend/docs/PIPELINE.md`](../frontend/docs/PIPELINE.md) — E2E 파이프라인
-- [`../frontend/docs/ENVIRONMENT.md`](../frontend/docs/ENVIRONMENT.md) — 환경변수 운영 원칙
+- [`docs/API_CONTRACTS.md`](./docs/API_CONTRACTS.md) — API 요청/응답 스펙
+- [`docs/DB_SCHEMA.md`](./docs/DB_SCHEMA.md) — PostgreSQL + pgvector 스키마
+- [`docs/PIPELINE.md`](./docs/PIPELINE.md) — E2E 파이프라인
+- [`docs/ENVIRONMENT.md`](./docs/ENVIRONMENT.md) — 환경변수 운영 원칙

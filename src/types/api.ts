@@ -2,7 +2,7 @@
  * core-api / inference-api 의 요청/응답 타입.
  *
  * 단일 진실의 원천:
- * - frontend/docs/API_CONTRACTS.md
+ * - docs/API_CONTRACTS.md
  *
  * 작성 규칙:
  * - 외부로 노출되는 필드명은 snake_case (프론트와 일치)

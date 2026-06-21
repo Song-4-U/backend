@@ -2,8 +2,8 @@
  * POST /matches/by-voice
  *
  * 참고:
- * - frontend/docs/API_CONTRACTS.md
- * - frontend/docs/PIPELINE.md
+ * - docs/API_CONTRACTS.md
+ * - docs/PIPELINE.md
  */
 
 import type { FastifyInstance } from "fastify";

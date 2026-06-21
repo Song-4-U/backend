@@ -5,7 +5,7 @@
  * - SQL 쿼리 캡슐화 (라우트/서비스가 SQL 을 직접 모르도록)
  * - VECTOR 파라미터는 pgvector helper(`toSql`) 로 직렬화
  *
- * 참고: frontend/docs/DB_SCHEMA.md - voice_profiles / Similarity Query Example
+ * 참고: docs/DB_SCHEMA.md - voice_profiles / Similarity Query Example
  */
 
 import pgvector from "pgvector";

@@ -1,7 +1,7 @@
 /**
  * POST /uploads/presigned-url
  *
- * 참고: frontend/docs/API_CONTRACTS.md
+ * 참고: docs/API_CONTRACTS.md
  */
 
 import type { FastifyInstance } from "fastify";
